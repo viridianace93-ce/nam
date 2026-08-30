@@ -16,7 +16,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { RotateCcw, RotateCw, Sparkles, X, Star } from 'lucide-react';
 
 const STORAGE_KEYS = {
-  ONBOARDING_SEEN: 'nam_onboarding_completed',
   CUSTOM_INGREDIENTS: 'nam_custom_ingredients',
   FAVORITES: 'nam_favorites',
   FAVORITE_CARDS: 'nam_favorite_cards',
@@ -25,20 +24,12 @@ const STORAGE_KEYS = {
   RECENT_HISTORY: 'nam_recent_history',
 };
 
-function shouldShowOnboarding(): boolean {
-  try {
-    return localStorage.getItem(STORAGE_KEYS.ONBOARDING_SEEN) !== 'true';
-  } catch {
-    return true;
-  }
-}
-
 export default function App() {
   // View state: 'select' (inventory input) or 'results' (suggested snacks)
   const [viewState, setViewState] = useState<'select' | 'results'>('select');
 
-  // Onboarding state
-  const [showOnboarding, setShowOnboarding] = useState(shouldShowOnboarding);
+  // Always start on the create-profile screen. Closing it only hides it for this visit.
+  const [showOnboarding, setShowOnboarding] = useState(true);
 
   // Profile Modal state
   const [showProfileModal, setShowProfileModal] = useState(false);
@@ -80,13 +71,7 @@ export default function App() {
   // Initialize from localStorage on mount
   useEffect(() => {
     try {
-      // 1. Check Onboarding
-      const seen = localStorage.getItem(STORAGE_KEYS.ONBOARDING_SEEN);
-      if (!seen) {
-        setShowOnboarding(true);
-      }
-
-      // 2. Load Custom Ingredients
+      // 1. Load Custom Ingredients
       const storedCustom = localStorage.getItem(STORAGE_KEYS.CUSTOM_INGREDIENTS);
       if (storedCustom) {
         const parsed = JSON.parse(storedCustom);
@@ -152,13 +137,8 @@ export default function App() {
     }
   }, [selectedIds]);
 
-  // Complete Onboarding
+  // Complete Onboarding (profile stays saved; welcome can show again on next visit)
   const handleCompleteOnboarding = () => {
-    try {
-      localStorage.setItem(STORAGE_KEYS.ONBOARDING_SEEN, 'true');
-    } catch (e) {
-      console.warn(e);
-    }
     setShowOnboarding(false);
   };
 
