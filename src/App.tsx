@@ -16,7 +16,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { RotateCcw, RotateCw, Sparkles, X, Star } from 'lucide-react';
 
 const STORAGE_KEYS = {
-  ONBOARDING_SEEN: 'nam_onboarding_seen',
+  ONBOARDING_SEEN: 'nam_onboarding_completed',
   CUSTOM_INGREDIENTS: 'nam_custom_ingredients',
   FAVORITES: 'nam_favorites',
   FAVORITE_CARDS: 'nam_favorite_cards',
@@ -25,12 +25,20 @@ const STORAGE_KEYS = {
   RECENT_HISTORY: 'nam_recent_history',
 };
 
+function shouldShowOnboarding(): boolean {
+  try {
+    return localStorage.getItem(STORAGE_KEYS.ONBOARDING_SEEN) !== 'true';
+  } catch {
+    return true;
+  }
+}
+
 export default function App() {
   // View state: 'select' (inventory input) or 'results' (suggested snacks)
   const [viewState, setViewState] = useState<'select' | 'results'>('select');
 
   // Onboarding state
-  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(shouldShowOnboarding);
 
   // Profile Modal state
   const [showProfileModal, setShowProfileModal] = useState(false);

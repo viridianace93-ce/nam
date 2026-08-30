@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, ArrowRight, ArrowLeft, ShieldAlert, Sparkles, Heart, Brain, Utensils, User, ShieldCheck } from 'lucide-react';
 import { UserProfile, DietaryIntolerance } from '../types';
@@ -33,6 +33,14 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
   const [selectedIntolerances, setSelectedIntolerances] = useState<DietaryIntolerance[]>(
     userProfile?.intolerances || []
   );
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setStep(1);
+    setName(userProfile?.name && userProfile.name !== 'Mi Perfil' ? userProfile.name : '');
+    setAvatarLetter(userProfile?.avatarLetter || 'Ñ');
+    setSelectedIntolerances(userProfile?.intolerances || []);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 

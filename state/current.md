@@ -10,6 +10,7 @@
 - Empty state con `PantrySketchIllustration`
 - Endpoint Gemini `/api/ai-combos` (opcional)
 - Persistencia `nam_*` en localStorage
+- Ruta aislada `/demo-day`: presentación de 6 diapositivas para Demo Day (flechas ←→; no toca el flujo del producto)
 
 ## Pendiente
 
