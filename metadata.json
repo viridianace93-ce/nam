@@ -1,0 +1,6 @@
+{
+  "name": "Ñam",
+  "description": "Bocados simples y equilibrados para cuando comer cuesta trabajo. Sin recetas ni estufa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ñam · Guía visual para entender la app</title>
+  <style>
+    :root {
+      --cream: #fcfaf5;
+      --ink: #1a3300;
+      --ink-soft: rgba(26, 51, 0, 0.72);
+      --ink-faint: rgba(26, 51, 0, 0.12);
+      --yellow: #ffe95c;
+      --mint: #d5f5c2;
+      --blush: #f6d0ff;
+      --teal: #a8e5e5;
+      --clay: #cb5521;
+      --paper: #ffffff;
+      --line: #e4e0d6;
+      --shadow: 3px 3px 0 #1a3300;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+      line-height: 1.5;
+      font-size: 16px;
+    }
+
+    a { color: inherit; }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+    }
+
+    header.hero {
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      border-radius: 16px;
+      padding: 28px 28px 24px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      background: var(--yellow);
+      border: 1px solid var(--ink);
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.15;
+      margin: 0 0 12px;
+      letter-spacing: -0.03em;
+    }
+
+    h1 mark {
+      background: var(--yellow);
+      color: var(--ink);
+      padding: 0 6px;
+      border-radius: 4px;
+    }
+
+    .lead {
+      font-size: 18px;
+      max-width: 62ch;
+      color: var(--ink-soft);
+      margin: 0 0 18px;
+    }
+
+    nav.toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    nav.toc a {
+      text-decoration: none;
+      border: 1.5px solid var(--ink);
+      background: var(--cream);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    nav.toc a:hover { background: var(--yellow); }
+
+    section {
+      margin: 42px 0;
+    }
+
+    h2 {
+      font-size: clamp(22px, 3vw, 28px);
+      letter-spacing: -0.02em;
+      margin: 0 0 8px;
+    }
+
+    .section-intro {
+      color: var(--ink-soft);
+      max-width: 68ch;
+      margin: 0 0 22px;
+    }
+
+    .grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .card {
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      padding: 16px;
+      background: var(--paper);
+      box-shadow: 2px 2px 0 var(--ink);
+      min-height: 100%;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--ink-soft);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .c-mint { background: var(--mint); }
+    .c-blush { background: var(--blush); }
+    .c-teal { background: var(--teal); }
+    .c-yellow { background: var(--yellow); }
+    .c-clay { background: #f4d2c4; }
+
+    .flow {
+      border: 2px solid var(--ink);
+      border-radius: 16px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      padding: 20px 16px 24px;
+    }
+
+    .flow-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .flow-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .node {
+      width: 168px;
+      text-align: left;
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      padding: 12px 12px 11px;
+      background: var(--cream);
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--ink);
+      transition: transform 0.12s ease, background 0.12s ease;
+    }
+
+    .node:hover, .node.active {
+      transform: translate(-1px, -1px);
+      background: var(--yellow);
+    }
+
+    .node small {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 4px;
+    }
+
+    .node strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .node span {
+      display: block;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+
+    .arrow {
+      align-self: center;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--ink);
+      min-width: 22px;
+      text-align: center;
+    }
+
+    .arrow.down { margin: 2px 0; }
+
+    .note {
+      margin-top: 18px;
+      background: var(--mint);
+      border: 2px solid var(--ink);
+      border-radius: 12px;
+      padding: 14px 16px;
+      min-height: 72px;
+    }
+
+    .note b { display: block; margin-bottom: 4px; }
+
+    .map-wrap {
+      border: 2px solid var(--ink);
+      border-radius: 16px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    svg.map {
+      width: 100%;
+      min-width: 760px;
+      height: auto;
+      display: block;
+    }
+
+    .map-node {
+      cursor: pointer;
+    }
+
+    .map-node rect {
+      stroke: var(--ink);
+      stroke-width: 2;
+    }
+
+    .map-node text {
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      fill: var(--ink);
+      pointer-events: none;
+    }
+
+    .edge {
+      fill: none;
+      stroke: rgba(26, 51, 0, 0.28);
+      stroke-width: 2;
+    }
+
+    .edge.on {
+      stroke: var(--ink);
+      stroke-width: 3;
+    }
+
+    .map-node.dim rect { opacity: 0.35; }
+    .map-node.dim text { opacity: 0.4; }
+    .map-node.on rect { stroke-width: 3; }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin-top: 14px;
+      font-size: 13px;
+    }
+
+    .swatch {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 1.5px solid var(--ink);
+      border-radius: 3px;
+      margin-right: 6px;
+      vertical-align: -1px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .list {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    .list li { margin: 6px 0; }
+
+    .story {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 8px 14px;
+      align-items: start;
+    }
+
+    .num {
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--ink);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      background: var(--yellow);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .hint {
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin-top: 10px;
+    }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--ink-soft);
+    }
+
+    @media (max-width: 860px) {
+      .grid-5 { grid-template-columns: 1fr 1fr; }
+      .two-col { grid-template-columns: 1fr; }
+      .node { width: 100%; max-width: 220px; }
+      .arrow.side { transform: rotate(90deg); width: 100%; }
+    }
+
+    @media (max-width: 540px) {
+      .grid-5 { grid-template-columns: 1fr; }
+      header.hero { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="eyebrow">Guía visual · Ñam</div>
+      <h1>Cómo funciona Ñam, <mark>de un vistazo</mark></h1>
+      <p class="lead">
+        Ñam te ayuda a armar un bocado rápido con lo que ya tienes en casa.
+        Sin recetas largas y sin encender la estufa. Esta página no es la app:
+        es un mapa para entenderla.
+      </p>
+      <nav class="toc">
+        <a href="#piezas">Las 5 piezas</a>
+        <a href="#flujo">Flujo de la experiencia</a>
+        <a href="#mapa">Mapa de dependencias</a>
+        <a href="#recorrido">Un recorrido de ejemplo</a>
+        <a href="#memoria">Qué se recuerda</a>
+      </nav>
+    </header>
+
+    <section id="piezas">
+      <h2>Las 5 piezas que ves</h2>
+      <p class="section-intro">
+        La app no es un laberinto de menús. Hay dos pantallas principales
+        y tres ventanas que se abren encima. El encabezado (logo, favoritos, ayuda y perfil)
+        está siempre arriba.
+      </p>
+      <div class="grid-5">
+        <article class="card">
+          <span class="tag c-yellow">Primera vez</span>
+          <h3>Bienvenida</h3>
+          <p>Te pide un nombre, un ícono y si evitas lácteos, gluten, frutos secos o huevo. Luego te deja en la alacena.</p>
+        </article>
+        <article class="card">
+          <span class="tag c-mint">Pantalla 1</span>
+          <h3>Alacena</h3>
+          <p>Buscas o tocas alimentos. Cuando hay al menos 3, aparece el botón para armar snacks.</p>
+        </article>
+        <article class="card">
+          <span class="tag c-blush">Pantalla 2</span>
+          <h3>Sugerencias</h3>
+          <p>Tarjetas de combinaciones (3 a 5 alimentos), un tip de hidratación y la opción de barajar más ideas.</p>
+        </article>
+        <article class="card">
+          <span class="tag c-teal">Ventana</span>
+          <h3>Favoritos</h3>
+          <p>Los snacks que guardaste. Puedes abrir uno otra vez y volver a ver esa combinación.</p>
+        </article>
+        <article class="card">
+          <span class="tag c-clay">Ventana</span>
+          <h3>Perfil</h3>
+          <p>Tu nombre, lo que evitas, snacks recientes y un botón para vaciar todo y empezar de cero.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="flujo">
+      <h2>Flujo de la experiencia</h2>
+      <p class="section-intro">
+        Toca cada caja para leer qué pasa en ese momento. El camino feliz es de izquierda a derecha:
+        llegar, elegir, armar, guardar.
+      </p>
+
+      <div class="flow">
+        <div class="flow-row">
+          <button class="node active" data-note="La primera vez aparece una bienvenida de 4 pasos. No pide contraseña. Guardas nombre, ícono y alimentos que evitas. Eso esconde de la lista lo que no te sienta bien.">
+            <small>1 · Entrada</small>
+            <strong>Bienvenida</strong>
+            <span>Nombre, ícono y qué evitas</span>
+          </button>
+          <div class="arrow side">→</div>
+          <button class="node" data-note="Esta es la casa de la app. Arriba hay un buscador. Abajo, los alimentos en cinco grupos: proteína, fruta, verdura, grasas y cereales. También puedes escribir uno que no esté y agregarlo.">
+            <small>2 · Elegir</small>
+            <strong>Alacena</strong>
+            <span>Busca o toca lo que tienes</span>
+          </button>
+          <div class="arrow side">→</div>
+          <button class="node" data-note="El botón grande se enciende solo con 3 o más alimentos. La app mezcla lo elegido en varias combinaciones cortas. Cada tarjeta dice por qué funciona y cómo prepararlo en un minuto.">
+            <small>3 · Armar</small>
+            <strong>Sugerencias</strong>
+            <span>Combinaciones de 3 a 5</span>
+          </button>
+          <div class="arrow side">→</div>
+          <div class="flow-col">
+            <button class="node" data-note="Deslizas a la derecha o tocas el corazón: el snack se guarda en Favoritos. Desde el encabezado o desde un atajo en la alacena puedes volver a verlos y cargarlos.">
+              <small>4a · Guardar</small>
+              <strong>Favoritos</strong>
+              <span>Lo que te gustó</span>
+            </button>
+            <button class="node" data-note="Deslizas a la izquierda para quitar una idea. Si hay más combinaciones, puedes barajar. Si te arrepientes, las restauras. Siempre puedes volver a la alacena a cambiar alimentos.">
+              <small>4b · Seguir</small>
+              <strong>Descartar o barajar</strong>
+              <span>O volver a elegir</span>
+            </button>
+          </div>
+        </div>
+        <div class="note" id="flow-note">
+          <b>1 · Bienvenida</b>
+          La primera vez aparece una bienvenida de 4 pasos. No pide contraseña. Guardas nombre, ícono y alimentos que evitas. Eso esconde de la lista lo que no te sienta bien.
+        </div>
+        <p class="hint">En cualquier momento, el encabezado abre de nuevo la ayuda, los favoritos o el perfil. No cambian de pantalla: se posan encima.</p>
+      </div>
+    </section>
+
+    <section id="mapa">
+      <h2>Mapa de dependencias</h2>
+      <p class="section-intro">
+        Cada flecha significa “esto alimenta a aquello”. Toca una caja para ver
+        solo sus conexiones. La idea central: <strong>lo que evitas filtra la lista;
+        lo que eliges arma las tarjetas; las tarjetas llenan favoritos e historial.</strong>
+      </p>
+
+      <div class="map-wrap">
+        <svg class="map" viewBox="0 0 1000 620" role="img" aria-label="Mapa de dependencias de Ñam">
+          <defs>
+            <marker id="arrowHead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#1a3300"></path>
+            </marker>
+          </defs>
+
+          <text x="40" y="24" font-size="11" font-weight="700" fill="#1a3300" opacity="0.55">LO QUE ENTRA</text>
+          <text x="390" y="24" font-size="11" font-weight="700" fill="#1a3300" opacity="0.55">LO QUE SE PREPARA</text>
+          <text x="740" y="24" font-size="11" font-weight="700" fill="#1a3300" opacity="0.55">LO QUE SALE</text>
+
+          <path class="edge" data-from="header" data-to="bienvenida" d="M 400 58 H 140 V 94" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="header" data-to="perfil" d="M 490 82 V 94" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="header" data-to="favoritos" d="M 400 58 H 20 V 454" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="bienvenida" data-to="perfil" d="M 240 120 H 390" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="perfil" data-to="lista" d="M 490 146 V 186" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="catalogo" data-to="lista" d="M 240 216 H 390" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="busqueda" data-to="lista" d="M 240 316 H 320 V 216 H 390" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="lista" data-to="seleccion" d="M 490 246 V 286" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="seleccion" data-to="motor" d="M 490 346 V 386" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="motor" data-to="tarjetas" d="M 590 416 H 740" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="motor" data-to="hidratacion" d="M 590 416 H 666 V 506 H 740" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="tarjetas" data-to="favoritos" d="M 840 446 V 484 H 240" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="tarjetas" data-to="historial" d="M 940 416 H 972 V 564 H 240" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="favoritos" data-to="seleccion" d="M 240 484 H 320 V 316 H 390" marker-end="url(#arrowHead)"></path>
+          <path class="edge" data-from="historial" data-to="seleccion" d="M 40 564 H 8 V 316 H 390" marker-end="url(#arrowHead)"></path>
+
+          <g class="map-node" data-id="header">
+            <rect x="390" y="34" width="200" height="48" rx="10" fill="#ffe95c"></rect>
+            <text x="490" y="54" text-anchor="middle" font-size="13" font-weight="700">Encabezado</text>
+            <text x="490" y="70" text-anchor="middle" font-size="11">abre las 3 ventanas</text>
+          </g>
+
+          <g class="map-node" data-id="bienvenida">
+            <rect x="40" y="94" width="200" height="52" rx="10" fill="#ffe95c"></rect>
+            <text x="140" y="116" text-anchor="middle" font-size="13" font-weight="700">Bienvenida</text>
+            <text x="140" y="132" text-anchor="middle" font-size="11">escribe el perfil</text>
+          </g>
+
+          <g class="map-node" data-id="perfil">
+            <rect x="390" y="94" width="200" height="52" rx="10" fill="#f4d2c4"></rect>
+            <text x="490" y="116" text-anchor="middle" font-size="13" font-weight="700">Perfil</text>
+            <text x="490" y="132" text-anchor="middle" font-size="11">nombre + lo que evitas</text>
+          </g>
+
+          <g class="map-node" data-id="catalogo">
+            <rect x="40" y="186" width="200" height="60" rx="10" fill="#ffffff"></rect>
+            <text x="140" y="210" text-anchor="middle" font-size="13" font-weight="700">Lista de alimentos</text>
+            <text x="140" y="228" text-anchor="middle" font-size="11">la alacena de partida</text>
+          </g>
+
+          <g class="map-node" data-id="lista">
+            <rect x="390" y="186" width="200" height="60" rx="10" fill="#d5f5c2"></rect>
+            <text x="490" y="210" text-anchor="middle" font-size="13" font-weight="700">Alimentos visibles</text>
+            <text x="490" y="228" text-anchor="middle" font-size="11">ya filtrados por tu perfil</text>
+          </g>
+
+          <g class="map-node" data-id="busqueda">
+            <rect x="40" y="286" width="200" height="60" rx="10" fill="#ffffff"></rect>
+            <text x="140" y="310" text-anchor="middle" font-size="13" font-weight="700">Buscador</text>
+            <text x="140" y="328" text-anchor="middle" font-size="11">encuentra o agrega uno</text>
+          </g>
+
+          <g class="map-node" data-id="seleccion">
+            <rect x="390" y="286" width="200" height="60" rx="10" fill="#d5f5c2"></rect>
+            <text x="490" y="310" text-anchor="middle" font-size="13" font-weight="700">Tu selección</text>
+            <text x="490" y="328" text-anchor="middle" font-size="11">mínimo 3 para continuar</text>
+          </g>
+
+          <g class="map-node" data-id="motor">
+            <rect x="390" y="386" width="200" height="60" rx="10" fill="#a8e5e5"></rect>
+            <text x="490" y="410" text-anchor="middle" font-size="13" font-weight="700">Armado de snacks</text>
+            <text x="490" y="428" text-anchor="middle" font-size="11">mezcla grupos y texturas</text>
+          </g>
+
+          <g class="map-node" data-id="tarjetas">
+            <rect x="740" y="386" width="200" height="60" rx="10" fill="#f6d0ff"></rect>
+            <text x="840" y="410" text-anchor="middle" font-size="13" font-weight="700">Tarjetas de snack</text>
+            <text x="840" y="428" text-anchor="middle" font-size="11">guardar · descartar · barajar</text>
+          </g>
+
+          <g class="map-node" data-id="favoritos">
+            <rect x="40" y="454" width="200" height="60" rx="10" fill="#f6d0ff"></rect>
+            <text x="140" y="478" text-anchor="middle" font-size="13" font-weight="700">Favoritos</text>
+            <text x="140" y="496" text-anchor="middle" font-size="11">al tocar uno, vuelve atrás</text>
+          </g>
+
+          <g class="map-node" data-id="hidratacion">
+            <rect x="740" y="506" width="200" height="52" rx="10" fill="#a8e5e5"></rect>
+            <text x="840" y="528" text-anchor="middle" font-size="13" font-weight="700">Tip de hidratación</text>
+            <text x="840" y="544" text-anchor="middle" font-size="11">sale junto a las tarjetas</text>
+          </g>
+
+          <g class="map-node" data-id="historial">
+            <rect x="40" y="538" width="200" height="52" rx="10" fill="#ffffff"></rect>
+            <text x="140" y="560" text-anchor="middle" font-size="13" font-weight="700">Recientes (en Perfil)</text>
+            <text x="140" y="576" text-anchor="middle" font-size="11">las últimas 3 armadas</text>
+          </g>
+        </svg>
+        <div class="legend">
+          <span><i class="swatch" style="background:#ffe95c"></i>Abre o escribe perfil</span>
+          <span><i class="swatch" style="background:#d5f5c2"></i>Alimentos y selección</span>
+          <span><i class="swatch" style="background:#a8e5e5"></i>Armado de ideas</span>
+          <span><i class="swatch" style="background:#f6d0ff"></i>Resultado que puedes guardar</span>
+          <span><i class="swatch" style="background:#f4d2c4"></i>Preferencias de la persona</span>
+        </div>
+        <div class="note" id="map-note">
+          <b>Toca una caja</b>
+          Verás solo las flechas que salen o llegan a esa parte. Así se entiende quién depende de quién.
+        </div>
+      </div>
+    </section>
+
+    <section id="recorrido">
+      <h2>Un recorrido de ejemplo</h2>
+      <p class="section-intro">Imagina que llegas con poca energía y tienes yogurt, manzana, crema de cacahuate y tostadas.</p>
+      <div class="card">
+        <div class="story">
+          <div class="num">1</div>
+          <div>
+            <strong>Dices cómo te llamas y que evitas gluten.</strong>
+            <p>Las tostadas de trigo salen de la lista. Las de maíz se quedan.</p>
+          </div>
+          <div class="num">2</div>
+          <div>
+            <strong>En la alacena tocas yogurt, manzana y crema de cacahuate.</strong>
+            <p>El recuento llega a 3. El botón cambia a “Armar snacks”.</p>
+          </div>
+          <div class="num">3</div>
+          <div>
+            <strong>Ves 3 o 4 tarjetas de colores, tipo nota adhesiva.</strong>
+            <p>Cada una junta esos alimentos (u otros que hayas marcado) y te dice por qué el bocado se siente completo.</p>
+          </div>
+          <div class="num">4</div>
+          <div>
+            <strong>Guardas una. Descartas otra. O vuelves a la alacena.</strong>
+            <p>Si más tarde abres Favoritos o Recientes, la app vuelve a marcar esos alimentos y te enseña otra vez el resultado.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="memoria">
+      <h2>Qué se recuerda y por qué importa</h2>
+      <p class="section-intro">Nada de esto viaja a una cuenta en internet. Se queda en este aparato, para que al recargar no empieces de cero.</p>
+      <div class="two-col">
+        <article class="card">
+          <h3>Se guarda</h3>
+          <ul class="list">
+            <li>Que ya viste la bienvenida</li>
+            <li>Tu nombre, ícono y lo que evitas</li>
+            <li>Alimentos que agregaste tú</li>
+            <li>Cuáles tienes marcados ahora</li>
+            <li>Favoritos y las 3 combinaciones recientes</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Cómo se usan entre sí</h3>
+          <ul class="list">
+            <li><strong>Lo que evitas</strong> decide qué aparece en la alacena.</li>
+            <li><strong>Lo marcado</strong> es el único insumo para armar snacks.</li>
+            <li><strong>Un favorito o un reciente</strong> vuelve a marcar esos alimentos y abre sugerencias.</li>
+            <li><strong>Vaciar todo</strong> (en Perfil) borra alacena, favoritos e historial.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      Archivo de aprendizaje, aparte de la app. No cambia Ñam.
+      Abre la app en <a href="http://localhost:3000">http://localhost:3000</a> para usarla de verdad.
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var nodes = document.querySelectorAll(".node");
+      var note = document.getElementById("flow-note");
+
+      nodes.forEach(function (node) {
+        node.addEventListener("click", function () {
+          nodes.forEach(function (n) { n.classList.remove("active"); });
+          node.classList.add("active");
+          var title = node.querySelector("strong").textContent;
+          var step = node.querySelector("small").textContent;
+          note.innerHTML = "<b>" + step + " · " + title + "</b>" + node.getAttribute("data-note");
+        });
+      });
+
+      var mapNodes = document.querySelectorAll(".map-node");
+      var edges = document.querySelectorAll(".edge");
+      var mapNote = document.getElementById("map-note");
+      var copy = {
+        header: "El encabezado no decide combinaciones. Solo abre Bienvenida, Favoritos o Perfil.",
+        perfil: "El perfil filtra la lista: si evitas lácteos, el yogurt no se muestra. También guarda tu nombre.",
+        catalogo: "Es el conjunto de alimentos que la app ya conoce. Junto con los que tú agregas, forma la alacena.",
+        busqueda: "El buscador marca un alimento existente o crea uno nuevo y lo deja seleccionado.",
+        lista: "Lo que realmente ves: lista de partida menos lo que tu perfil esconde.",
+        seleccion: "Los alimentos tocados. Con menos de 3 no hay sugerencias. Favoritos y recientes pueden volver a marcarlos.",
+        bienvenida: "Escribe el perfil la primera vez (o cuando pides ayuda). Ese perfil alimenta el filtro de la alacena.",
+        motor: "Toma tu selección y arma combinaciones de 3 a 5 alimentos, buscando mezcla de grupos.",
+        hidratacion: "Un tip extra que aparece debajo de las tarjetas, pensado a partir de lo que elegiste.",
+        tarjetas: "El resultado visible. De aquí salen favoritos, descartes, el historial reciente y la opción de barajar.",
+        favoritos: "Snacks guardados. Al elegir uno, la app marca otra vez esos alimentos y abre sugerencias.",
+        historial: "Las últimas 3 combinaciones armadas, dentro del perfil. Sirven para repetir un snack reciente."
+      };
+
+      function titles() {
+        var map = {};
+        mapNodes.forEach(function (n) {
+          var t = n.querySelector("text");
+          map[n.getAttribute("data-id")] = t ? t.textContent : n.getAttribute("data-id");
+        });
+        return map;
+      }
+
+      var titleMap = titles();
+
+      function highlight(id) {
+        mapNodes.forEach(function (n) {
+          var match = n.getAttribute("data-id") === id;
+          n.classList.toggle("on", match);
+          n.classList.toggle("dim", !match);
+        });
+        edges.forEach(function (e) {
+          var related = e.getAttribute("data-from") === id || e.getAttribute("data-to") === id;
+          e.classList.toggle("on", related);
+          if (related) {
+            var other = e.getAttribute("data-from") === id ? e.getAttribute("data-to") : e.getAttribute("data-from");
+            document.querySelector('.map-node[data-id="' + other + '"]').classList.remove("dim");
+          }
+        });
+        mapNote.innerHTML = "<b>" + titleMap[id] + "</b>" + (copy[id] || "");
+      }
+
+      function clearMap() {
+        mapNodes.forEach(function (n) { n.classList.remove("on", "dim"); });
+        edges.forEach(function (e) { e.classList.remove("on"); });
+        mapNote.innerHTML = "<b>Toca una caja</b>Verás solo las flechas que salen o llegan a esa parte. Así se entiende quién depende de quién.";
+      }
+
+      mapNodes.forEach(function (n) {
+        n.addEventListener("click", function (ev) {
+          ev.stopPropagation();
+          var id = n.getAttribute("data-id");
+          if (n.classList.contains("on")) {
+            clearMap();
+          } else {
+            highlight(id);
+          }
+        });
+      });
+
+      document.querySelector(".map").addEventListener("click", function (ev) {
+        if (ev.target.tagName === "svg" || ev.target.classList.contains("map")) clearMap();
+      });
+    })();
+  </script>
+</body>
+</html>

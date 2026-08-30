@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-headline: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+
+    --color-forest: #1a3300;
+    --color-cream: #fcfaf5;
+    --color-highlighter: #ffe95c;
+    --color-mint: #d5f5c2;
+    --color-teal: #a8e5e5;
+    --color-blush: #f6d0ff;
+    --color-terracotta: #cb5521;
+    --color-pencil: #b6b6b6;
+    --color-whisper: #f1f1f1;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-ui);
+    background-color: #fcfaf5;
+    color: #1a3300;
+    overflow-x: hidden;
+  }
+}
+
+.font-display {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.fluid-h1 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: clamp(20px, 6vw, 28px);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  margin-bottom: 8px;
+}
+
+.fluid-snack-title {
+  font-size: clamp(14px, 4.5vw, 17px);
+  line-height: 1.35;
+  font-weight: 700;
+  color: #1a3300;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.font-ui {
+  font-family: 'Inter', sans-serif;
+}
+
+.font-mono-tag {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  max-width: 100%;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Sketchbook subtle paper grain pattern */
+.bg-cream-paper {
+  background-color: #fcfaf5;
+}
+
+.paper-grid-subtle {
+  background-image: radial-gradient(rgba(26, 51, 0, 0.07) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Marker highlight effect without breaking text flow */
+.marker-highlight {
+  background-color: #ffe95c;
+  display: inline;
+  padding: 2px 6px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  border-radius: 2px;
+}
+
+/* Custom crisp scrollbar for horizontal chips/tabs */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
